@@ -31,7 +31,7 @@ class MyBot(AresBot):
 
         # Select an SCV for scouting
         if self.workers:
-            scout_scv = self.workers.random_or_first
+            scout_scv = self.workers.random()  # Replaced 'random_or_first' with 'random()'
             self.scout_tag = scout_scv.tag
             self.manager_mediator.assign_role(tag=scout_scv.tag, role=UnitRole.SCOUT)
             print(f"SCV {scout_scv.tag} assigned as scout.")
