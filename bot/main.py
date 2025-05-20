@@ -36,7 +36,7 @@ class MyBot(AresBot):
             # Use random.choice to select a random SCV from the workers list
             scout_scv = random.choice(self.workers)
             self.scout_tag = scout_scv.tag
-            self.manager_mediator.assign_role(tag=scout_scv.tag, role=UnitRole.SCOUT)
+            self.mediator.assign_role(tag=scout_scv.tag, role=UnitRole.SCOUT)
             print(f"SCV {scout_scv.tag} assigned as scout.")
         else:
             print("No SCVs available to assign as scout at on_start.")
@@ -54,7 +54,7 @@ class MyBot(AresBot):
             overall_attack_target = self.start_location
 
         # Combat logic for ATTACKING units (Marines)
-        attacking_marines: SC2Units = self.manager_mediator.get_units_from_role(role=UnitRole.ATTACKING, unit_type=UnitTypeId.MARINE)
+        attacking_marines: SC2Units = self.mediator.get_units_from_role(role=UnitRole.ATTACKING, unit_type=UnitTypeId.MARINE)
         
         for marine in attacking_marines:
             # Find nearby enemy ground units (adjust sight_range as needed, e.g., marine.sight_range or fixed value)
@@ -110,15 +110,15 @@ class MyBot(AresBot):
             and self.structures(UnitTypeId.SUPPLYDEPOT).not_ready.amount == 0
             and self.already_pending(UnitTypeId.SUPPLYDEPOT) == 0
         ):
-            if placement_location := self.manager_mediator.request_building_placement(
+            if placement_location := self.mediator.request_building_placement(
                 base_location=self.start_location,
                 structure_type=UnitTypeId.SUPPLYDEPOT,
                 reserve_placement=True,
             ):
-                if worker := self.manager_mediator.select_worker(
+                if worker := self.mediator.select_worker(
                     target_position=placement_location, force_close=True
                 ):
-                    self.manager_mediator.assign_role(tag=worker.tag, role=UnitRole.BUILDING)
+                    self.mediator.assign_role(tag=worker.tag, role=UnitRole.BUILDING)
                     worker.build(UnitTypeId.SUPPLYDEPOT, placement_location)
 
         # 3. Build Barracks
@@ -128,15 +128,15 @@ class MyBot(AresBot):
             and self.already_pending(UnitTypeId.BARRACKS) == 0
             and self.can_afford(UnitTypeId.BARRACKS)
         ):
-            if placement_location := self.manager_mediator.request_building_placement(
+            if placement_location := self.mediator.request_building_placement(
                 base_location=self.start_location,
                 structure_type=UnitTypeId.BARRACKS,
                 reserve_placement=True,
             ):
-                if worker := self.manager_mediator.select_worker(
+                if worker := self.mediator.select_worker(
                     target_position=placement_location, force_close=True
                 ):
-                    self.manager_mediator.assign_role(tag=worker.tag, role=UnitRole.BUILDING)
+                    self.mediator.assign_role(tag=worker.tag, role=UnitRole.BUILDING)
                     worker.build(UnitTypeId.BARRACKS, placement_location)
 
         # 4. Build Refinery
@@ -150,10 +150,10 @@ class MyBot(AresBot):
                 for vg in vespene_geysers:
                     # Check if there's already a refinery on this geyser
                     if not self.structures(UnitTypeId.REFINERY).closer_than(1.0, vg).exists:
-                        if worker := self.manager_mediator.select_worker(
+                        if worker := self.mediator.select_worker(
                             target_position=vg.position, force_close=True
                         ):
-                            self.manager_mediator.assign_role(tag=worker.tag, role=UnitRole.BUILDING)
+                            self.mediator.assign_role(tag=worker.tag, role=UnitRole.BUILDING)
                             worker.build(UnitTypeId.REFINERY, vg)
                             break # build one at a time
 
@@ -186,7 +186,7 @@ class MyBot(AresBot):
         await super(MyBot, self).on_unit_created(unit)
 
         if unit.type_id == UnitTypeId.MARINE: # Or any other combat unit type
-            self.manager_mediator.assign_role(tag=unit.tag, role=UnitRole.ATTACKING)
+            self.mediator.assign_role(tag=unit.tag, role=UnitRole.ATTACKING)
             print(f"Unit {unit.tag} ({unit.type_id.name}) created and assigned role ATTACKING.")
         # custom on_unit_created logic here ...
 
@@ -204,11 +204,11 @@ class MyBot(AresBot):
 
         if unit.type_id == UnitTypeId.MARINE and unit.health_percentage < 0.35:
             # Check if unit is already retreating (e.g. has DEFENDING role) to avoid re-issuing
-            current_role = self.manager_mediator.get_role_for_tag(unit.tag)
+            current_role = self.mediator.get_role_for_tag(unit.tag)
             if current_role != UnitRole.DEFENDING:
                 print(f"Marine {unit.tag} is low health ({unit.health_percentage:.2f}), attempting to retreat.")
-                ground_grid = self.manager_mediator.get_ground_grid
+                ground_grid = self.mediator.get_ground_grid
                 self.register_behavior(KeepUnitSafe(unit=unit, grid=ground_grid))
                 # Change role to prevent other combat logic from interfering
-                self.manager_mediator.assign_role(tag=unit.tag, role=UnitRole.DEFENDING)
+                self.mediator.assign_role(tag=unit.tag, role=UnitRole.DEFENDING)
         # custom on_unit_took_damage logic here ...
