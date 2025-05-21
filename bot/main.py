@@ -40,9 +40,11 @@ class MyBot(AresBot):
         await super(MyBot, self).on_step(iteration)
         
         # Handle TechLab construction
-        for factory in self.structures(UnitID.FACTORY).ready:
-            if not factory.has_techlab and self.can_afford(UnitID.TECHLAB):
-                await self.build(UnitID.TECHLAB, near=factory)
+        for factory in self.structures(UnitID.FACTORY).ready.noqueue:
+            if (not factory.has_techlab and 
+                not factory.has_reactor and
+                self.can_afford(UnitID.TECHLAB)):
+                factory(AbilityId.BUILD_TECHLAB_FACTORY)
         
         # Handle Orbital Command upgrade
         for cc in self.townhalls(UnitID.COMMANDCENTER):
