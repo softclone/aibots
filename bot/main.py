@@ -20,7 +20,7 @@ class MyBot(AresBot):
     def __init__(self, game_step_override: Optional[int] = None):
         super().__init__(game_step_override)
         self._assigned_marine_squad: bool = False
-        self._build_cycle: list = []
+        self._build_cycle: list = ['BioTank']  # Initialize with default build
         
     @property
     def marine_tank_comp(self) -> Dict[UnitID, Dict]:
@@ -92,17 +92,11 @@ class MyBot(AresBot):
                 unit.attack(target)
 
     async def on_start(self) -> None:
-        await super(MyBot, self).on_start()
-        
-        try:
-            # Initialize build cycle
-            if hasattr(self, 'manager_hub') and hasattr(self.manager_hub, 'data_manager'):
-                self._build_cycle = self.manager_hub.data_manager.build_cycle
-                if not self._build_cycle:
-                    self._build_cycle = ['BioTank']
-        except Exception as e:
-            print(f"Error initializing build cycle: {e}")
+        # Set build cycle before parent class initializes managers
+        if not self._build_cycle:
             self._build_cycle = ['BioTank']
+            
+        await super(MyBot, self).on_start()
     #
     # async def on_end(self, game_result: Result) -> None:
     #     await super(MyBot, self).on_end(game_result)
