@@ -21,6 +21,7 @@ BuildChoices:
             - BioTank
         Default: BioTank
         Debug: BioTank
+        StrategyUsed: BioTank
 
 Builds:
     BioTank:

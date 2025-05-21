@@ -20,7 +20,12 @@ class MyBot(AresBot):
     def __init__(self, game_step_override: Optional[int] = None):
         super().__init__(game_step_override)
         self._assigned_marine_squad: bool = False
-        self._build_cycle: list = ['BioTank']  # Initialize with default build
+        # Initialize build cycle data structure expected by DataManager
+        self._build_cycle = {
+            'StrategyUsed': 'BioTank',
+            'BuildCycle': ['BioTank'],
+            'CurrentBuild': 'BioTank'
+        }
         
     @property
     def marine_tank_comp(self) -> Dict[UnitID, Dict]:
@@ -92,9 +97,13 @@ class MyBot(AresBot):
                 unit.attack(target)
 
     async def on_start(self) -> None:
-        # Set build cycle before parent class initializes managers
-        if not self._build_cycle:
-            self._build_cycle = ['BioTank']
+        # Ensure build cycle is properly initialized
+        if not hasattr(self, '_build_cycle') or not self._build_cycle:
+            self._build_cycle = {
+                'StrategyUsed': 'BioTank',
+                'BuildCycle': ['BioTank'],
+                'CurrentBuild': 'BioTank'
+            }
             
         await super(MyBot, self).on_start()
     #
