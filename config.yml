@@ -32,8 +32,9 @@ Builds:
             - 14 SupplyDepot
             - 16 Barracks
             - 16 Refinery
-            - 19 OrbitalCommand
+            - 19 CommandCenter
             - 20 Marine
             - 21 Factory
             - 23 TechLab
             - 25 SiegeTank
+            - 30 OrbitalCommand

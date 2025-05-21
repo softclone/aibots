@@ -12,6 +12,7 @@ from ares.behaviors.combat import CombatManeuver
 from ares.behaviors.combat.group import AMoveGroup, StutterGroupForward
 from ares.consts import UnitRole, UnitTreeQueryType
 from sc2.ids.unit_typeid import UnitTypeId as UnitID
+from sc2.ids.ability_id import AbilityId
 from sc2.position import Point2
 from sc2.unit import Unit
 from sc2.units import Units
@@ -34,6 +35,11 @@ class MyBot(AresBot):
 
     async def on_step(self, iteration: int) -> None:
         await super(MyBot, self).on_step(iteration)
+        
+        # Handle Orbital Command upgrade
+        for cc in self.townhalls(UnitID.COMMANDCENTER):
+            if not cc.is_flying and self.can_afford(UnitID.ORBITALCOMMAND):
+                cc(AbilityId.UPGRADETOORBITAL_ORBITALCOMMAND)
         
         # Macro Plan
         macro_plan = MacroPlan()
