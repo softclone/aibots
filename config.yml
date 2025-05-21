@@ -17,14 +17,8 @@ DebugOptions:
 BuildChoices:
     Terran:
         BotName: MarineTankBot
-        Cycle:
-            - MarineTank
-        Default: MarineTank
-        Debug: MarineTank
-        StrategyUsed: MarineTank
-        BuildCycle: ['MarineTank']
-        CurrentBuild: MarineTank
-        ChosenOpening: MarineTank
+        Cycle: ['MarineTank']
+        Debug: True
 
 Builds:
     MarineTank:
