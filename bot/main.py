@@ -107,13 +107,21 @@ class MyBot(AresBot):
             if unit.type_id == UnitID.SIEGETANK:
                 unit.attack(target)
 
+    def __init__(self, game_step_override: Optional[int] = None):
+        super().__init__(game_step_override)
+        self._assigned_marine_squad: bool = False
+        # Initialize build cycle structure
+        self._build_data = {
+            'build_cycle': ['BioTank'],
+            'chosen_opening': 'BioTank',
+            'current_build': 'BioTank'
+        }
+        # Set build data directly on the bot instance
+        self.build_cycle = self._build_data['build_cycle']
+        self.chosen_opening = self._build_data['chosen_opening']
+        self.current_build = self._build_data['current_build']
+
     async def on_start(self) -> None:
-        # Initialize build data before parent class
-        if hasattr(self, 'manager_hub') and hasattr(self.manager_hub, 'data_manager'):
-            self.manager_hub.data_manager.build_cycle = self._build_data['build_cycle']
-            self.manager_hub.data_manager.chosen_opening = self._build_data['chosen_opening']
-            self.manager_hub.data_manager.current_build = self._build_data['current_build']
-            
         await super(MyBot, self).on_start()
     #
     # async def on_end(self, game_result: Result) -> None:
