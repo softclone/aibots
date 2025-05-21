@@ -8,6 +8,9 @@ from ares.behaviors.macro import (
     ProductionController, 
     SpawnController,
 )
+from ares.behaviors.combat import CombatManeuver
+from ares.behaviors.combat.group import AMoveGroup, StutterGroupForward
+from ares.consts import UnitRole, UnitTreeQueryType
 from sc2.ids.unit_typeid import UnitTypeId as UnitID
 from sc2.position import Point2
 from sc2.unit import Unit
