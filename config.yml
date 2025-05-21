@@ -1,24 +1,35 @@
-# Check `ares-sc2/src/ares/config.yml` for valid config options
-# Use this to override those values
-# Can add own unique config options here if desired
-
-# Set custom values here for your bot
-MyBotName: MyBotName
+MyBotName: MarineTankBot
 MyBotRace: Terran
-# setting ture allows auto upload to aiareana (https://aiarena.net/) on push to `main` branch
-# see tutorial on readme before setting to True
 AutoUploadToAiarena: False
-########################
 
-UseData: False
-Debug: False
+UseData: True
+Debug: False 
 GameStep: 2
 DebugGameStep: 2
 
 DebugOptions:
-    # one of: Air, AirVsGround, Ground, GroundAvoidance, AirAvoidance
     ActiveGrid: Ground
-    ChatDebug: True
+    ChatDebug: False
     DebugSpawn: False
     ShowPathingCost: False
     ResourceDebug: False
+
+BuildChoices:
+    Terran:
+        BotName: MarineTankBot
+        Cycle:
+            - BioTank
+
+Builds:
+    BioTank:
+        ConstantWorkerProductionTill: 60
+        AutoSupplyAtSupply: 18
+        OpeningBuildOrder:
+            - 14 SupplyDepot
+            - 16 Barracks
+            - 16 Refinery
+            - 19 OrbitalCommand
+            - 20 Marine
+            - 21 Factory
+            - 23 TechLab
+            - 25 SiegeTank
