@@ -34,6 +34,12 @@ class MyBot(AresBot):
     async def on_step(self, iteration: int) -> None:
         await super(MyBot, self).on_step(iteration)
         
+        # Prevent early refinery construction
+        if not self.structures(UnitID.SUPPLYDEPOT).ready.exists:
+            for refinery in self.structures(UnitID.REFINERY):
+                if refinery.build_progress < 1.0:
+                    refinery(AbilityId.CANCEL_BUILD)
+        
         # Handle TechLab construction
         for factory in self.structures(UnitID.FACTORY).ready.idle:
             if (not factory.has_techlab and 
@@ -50,7 +56,9 @@ class MyBot(AresBot):
         macro_plan = MacroPlan()
         macro_plan.add(AutoSupply(self.start_location))
         macro_plan.add(BuildWorkers(to_count=60))
-        macro_plan.add(GasBuildingController(to_count=4))
+        # Only enable gas building after first supply depot is up
+        if self.structures(UnitID.SUPPLYDEPOT).ready.exists:
+            macro_plan.add(GasBuildingController(to_count=4))
         macro_plan.add(SpawnController(self.marine_tank_comp))
         macro_plan.add(ProductionController(
             self.marine_tank_comp, self.start_location
