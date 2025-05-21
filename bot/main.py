@@ -113,9 +113,11 @@ class MyBot(AresBot):
                 unit.attack(target)
 
     def register_managers(self) -> None:
-        """Register managers with default MarineTank build if none specified"""
-        if not hasattr(self, 'build_cycle'):
-            self.build_cycle = self.config['BuildChoices']['Terran']['Cycle']
+        """Register managers with default MarineTank build"""
+        # Ensure build data exists before parent registers managers
+        self.build_cycle = ['MarineTank']
+        self.chosen_opening = 'MarineTank'
+        self.current_build = 'MarineTank'
         super().register_managers()
 
     async def on_start(self) -> None:
