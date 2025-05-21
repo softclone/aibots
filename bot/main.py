@@ -1,12 +1,10 @@
 from typing import Optional
 
-import random  # Added import for random.choice
-
 from sc2.ids.unit_typeid import UnitTypeId
 from sc2.ids.ability_id import AbilityId
 from sc2.position import Point2
-from sc2.unit import Unit  # Added import
-from sc2.units import Units as SC2Units  # Renamed to avoid conflict with Ares Units if any
+from sc2.unit import Unit # Added import
+from sc2.units import Units as SC2Units # Renamed to avoid conflict with Ares Units if any
 
 from ares import AresBot
 from ares.consts import UnitRole
@@ -33,10 +31,9 @@ class MyBot(AresBot):
 
         # Select an SCV for scouting
         if self.workers:
-            # Use random.choice to select a random SCV from the workers list
-            scout_scv = random.choice(self.workers)
+            scout_scv = self.workers.random_or_first
             self.scout_tag = scout_scv.tag
-            self.mediator.assign_role(tag=scout_scv.tag, role=UnitRole.SCOUT)
+            self.mediator.assign_role(tag=scout_scv.tag, role=UnitRole.SCOUTING)
             print(f"SCV {scout_scv.tag} assigned as scout.")
         else:
             print("No SCVs available to assign as scout at on_start.")
