@@ -39,6 +39,11 @@ class MyBot(AresBot):
     async def on_step(self, iteration: int) -> None:
         await super(MyBot, self).on_step(iteration)
         
+        # Handle TechLab construction
+        for factory in self.structures(UnitID.FACTORY).ready:
+            if not factory.has_techlab and self.can_afford(UnitID.TECHLAB):
+                await self.build(UnitID.TECHLAB, near=factory)
+        
         # Handle Orbital Command upgrade
         for cc in self.townhalls(UnitID.COMMANDCENTER):
             if not cc.is_flying and self.can_afford(UnitID.ORBITALCOMMAND):
