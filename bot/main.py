@@ -112,16 +112,16 @@ class MyBot(AresBot):
             if unit.type_id == UnitID.SIEGETANK:
                 unit.attack(target)
 
-    def register_managers(self) -> None:
-        """Register managers with default MarineTank build"""
-        # Ensure build data exists before parent registers managers
+    async def on_start(self) -> None:
+        """Initialize build data before registering managers"""
         self.build_cycle = ['MarineTank']
         self.chosen_opening = 'MarineTank'
         self.current_build = 'MarineTank'
-        super().register_managers()
-
-    async def on_start(self) -> None:
         await super(MyBot, self).on_start()
+
+    def register_managers(self) -> None:
+        """Register managers after build data is initialized"""
+        super().register_managers()
     #
     # async def on_end(self, game_result: Result) -> None:
     #     await super(MyBot, self).on_end(game_result)
