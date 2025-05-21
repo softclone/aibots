@@ -18,7 +18,7 @@ BuildChoices:
     Terran:
         BotName: MarineTankBot
         Debug: True
-        BuildCycle: ['MarineTank']  # Single source of truth
+        Cycle: ['MarineTank']  # Ares expects 'Cycle' key
 
 Builds:
     MarineTank:
