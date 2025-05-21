@@ -18,12 +18,7 @@ BuildChoices:
     Terran:
         BotName: MarineTankBot
         Cycle: ['MarineTank']
-        Default: 'MarineTank'
         Debug: True
-        StrategyUsed: 'MarineTank'
-        BuildCycle: ['MarineTank']
-        CurrentBuild: 'MarineTank'
-        ChosenOpening: 'MarineTank'
 
 Builds:
     MarineTank:

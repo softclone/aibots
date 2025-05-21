@@ -112,15 +112,18 @@ class MyBot(AresBot):
             if unit.type_id == UnitID.SIEGETANK:
                 unit.attack(target)
 
-    async def on_start(self) -> None:
-        """Initialize build data before registering managers"""
+    def __init__(self, game_step_override: Optional[int] = None):
+        super().__init__(game_step_override)
+        self._assigned_marine_squad = False
+        # Set build data directly in __init__ before any managers run
         self.build_cycle = ['MarineTank']
         self.chosen_opening = 'MarineTank'
         self.current_build = 'MarineTank'
+
+    async def on_start(self) -> None:
         await super(MyBot, self).on_start()
 
     def register_managers(self) -> None:
-        """Register managers after build data is initialized"""
         super().register_managers()
     #
     # async def on_end(self, game_result: Result) -> None:
