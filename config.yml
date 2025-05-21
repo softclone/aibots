@@ -23,6 +23,8 @@ BuildChoices:
         Debug: BioTank
         StrategyUsed: BioTank
         BuildCycle: ['BioTank']
+        CurrentBuild: BioTank
+        ChosenOpening: BioTank
 
 Builds:
     BioTank:
