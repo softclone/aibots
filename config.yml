@@ -17,8 +17,8 @@ DebugOptions:
 BuildChoices:
     Terran:
         BotName: MarineTankBot
-        Cycle: ['MarineTank']
         Debug: True
+        BuildCycle: ['MarineTank']  # Single source of truth
 
 Builds:
     MarineTank:

@@ -115,15 +115,21 @@ class MyBot(AresBot):
     def __init__(self, game_step_override: Optional[int] = None):
         super().__init__(game_step_override)
         self._assigned_marine_squad = False
-        # Set build data directly in __init__ before any managers run
-        self.build_cycle = ['MarineTank']
-        self.chosen_opening = 'MarineTank'
-        self.current_build = 'MarineTank'
+        # Initialize empty build data that managers expect
+        self.build_cycle = []
+        self.chosen_opening = ''
+        self.current_build = ''
 
     async def on_start(self) -> None:
+        """Initialize build data from config after game starts"""
         await super(MyBot, self).on_start()
+        # Now safely set build data after managers are ready
+        self.build_cycle = self.config['BuildChoices']['Terran']['BuildCycle']
+        self.chosen_opening = self.build_cycle[0]
+        self.current_build = self.build_cycle[0]
 
     def register_managers(self) -> None:
+        """Register managers with empty build data first"""
         super().register_managers()
     #
     # async def on_end(self, game_result: Result) -> None:
