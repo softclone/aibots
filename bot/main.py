@@ -109,9 +109,9 @@ class MyBot(AresBot):
               f"opening: {getattr(self, 'chosen_opening', None)}")
         # Ensure build data exists before parent registers managers
         if not hasattr(self, 'build_cycle'):
-            self.build_cycle = ['BioTank']
-            self.chosen_opening = 'BioTank'
-            self.current_build = 'BioTank'
+            self.build_cycle = ['MarineTank']
+            self.chosen_opening = 'MarineTank'
+            self.current_build = 'MarineTank'
         super().register_managers()
 
     async def on_start(self) -> None:

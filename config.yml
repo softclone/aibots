@@ -18,16 +18,16 @@ BuildChoices:
     Terran:
         BotName: MarineTankBot
         Cycle:
-            - BioTank
-        Default: BioTank
-        Debug: BioTank
-        StrategyUsed: BioTank
-        BuildCycle: ['BioTank']
-        CurrentBuild: BioTank
-        ChosenOpening: BioTank
+            - MarineTank
+        Default: MarineTank
+        Debug: MarineTank
+        StrategyUsed: MarineTank
+        BuildCycle: ['MarineTank']
+        CurrentBuild: MarineTank
+        ChosenOpening: MarineTank
 
 Builds:
-    BioTank:
+    MarineTank:
         ConstantWorkerProductionTill: 60
         AutoSupplyAtSupply: 18
         OpeningBuildOrder:
