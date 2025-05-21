@@ -35,7 +35,7 @@ class MyBot(AresBot):
         await super(MyBot, self).on_step(iteration)
         
         # Handle TechLab construction
-        for factory in self.structures(UnitID.FACTORY).ready.noqueue:
+        for factory in self.structures(UnitID.FACTORY).ready.idle:
             if (not factory.has_techlab and 
                 not factory.has_reactor and
                 self.can_afford(UnitID.TECHLAB)):
