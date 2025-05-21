@@ -27,6 +27,10 @@ class MyBot(AresBot):
             'chosen_opening': 'BioTank',
             'current_build': 'BioTank'
         }
+        # Set build data directly on the bot instance
+        self.build_cycle = self._build_data['build_cycle']
+        self.chosen_opening = self._build_data['chosen_opening']
+        self.current_build = self._build_data['current_build']
         
     @property
     def marine_tank_comp(self) -> Dict[UnitID, Dict]:
@@ -108,20 +112,6 @@ class MyBot(AresBot):
         for unit in army:
             if unit.type_id == UnitID.SIEGETANK:
                 unit.attack(target)
-
-    def __init__(self, game_step_override: Optional[int] = None):
-        super().__init__(game_step_override)
-        self._assigned_marine_squad: bool = False
-        # Initialize build cycle structure
-        self._build_data = {
-            'build_cycle': ['BioTank'],
-            'chosen_opening': 'BioTank',
-            'current_build': 'BioTank'
-        }
-        # Set build data directly on the bot instance
-        self.build_cycle = self._build_data['build_cycle']
-        self.chosen_opening = self._build_data['chosen_opening']
-        self.current_build = self._build_data['current_build']
 
     async def on_start(self) -> None:
         await super(MyBot, self).on_start()
