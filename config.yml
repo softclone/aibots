@@ -4,7 +4,7 @@
 
 # Set custom values here for your bot
 MyBotName: MyBotName
-MyBotRace: Random
+MyBotRace: Terran
 # setting ture allows auto upload to aiareana (https://aiarena.net/) on push to `main` branch
 # see tutorial on readme before setting to True
 AutoUploadToAiarena: False
