@@ -22,6 +22,7 @@ BuildChoices:
         Default: BioTank
         Debug: BioTank
         StrategyUsed: BioTank
+        BuildCycle: ['BioTank']
 
 Builds:
     BioTank:

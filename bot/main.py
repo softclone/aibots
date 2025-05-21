@@ -20,12 +20,9 @@ class MyBot(AresBot):
     def __init__(self, game_step_override: Optional[int] = None):
         super().__init__(game_step_override)
         self._assigned_marine_squad: bool = False
-        # Initialize build cycle data structure expected by DataManager
-        self._build_cycle = {
-            'StrategyUsed': 'BioTank',
-            'BuildCycle': ['BioTank'],
-            'CurrentBuild': 'BioTank'
-        }
+        # Initialize build cycle directly in DataManager
+        if hasattr(self, 'manager_hub') and hasattr(self.manager_hub, 'data_manager'):
+            self.manager_hub.data_manager.build_cycle = ['BioTank']
         
     @property
     def marine_tank_comp(self) -> Dict[UnitID, Dict]:
@@ -97,14 +94,11 @@ class MyBot(AresBot):
                 unit.attack(target)
 
     async def on_start(self) -> None:
-        # Ensure build cycle is properly initialized
-        if not hasattr(self, '_build_cycle') or not self._build_cycle:
-            self._build_cycle = {
-                'StrategyUsed': 'BioTank',
-                'BuildCycle': ['BioTank'],
-                'CurrentBuild': 'BioTank'
-            }
-            
+        # Ensure build cycle is set before parent initialization
+        if hasattr(self, 'manager_hub') and hasattr(self.manager_hub, 'data_manager'):
+            if not self.manager_hub.data_manager.build_cycle:
+                self.manager_hub.data_manager.build_cycle = ['BioTank']
+                
         await super(MyBot, self).on_start()
     #
     # async def on_end(self, game_result: Result) -> None:
