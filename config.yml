@@ -19,6 +19,7 @@ BuildChoices:
         BotName: MarineTankBot
         Cycle:
             - BioTank
+        Default: BioTank
 
 Builds:
     BioTank:
