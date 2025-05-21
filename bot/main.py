@@ -45,7 +45,7 @@ class MyBot(AresBot):
         self.register_behavior(macro_plan)
         
         # Army Control
-        if army := self.mediator.get_units_from_role(UnitRole.ATTACKING):
+        if army := self.mediator.get_units_from_role(role=UnitRole.ATTACKING):
             if not self._assigned_marine_squad and self.time > 240.0:
                 self._assign_marine_squad(army)
                 self._assigned_marine_squad = True
@@ -65,7 +65,7 @@ class MyBot(AresBot):
         target = self.enemy_start_locations[0]
         
         # Control marine squad
-        if marine_squad := self.mediator.get_units_from_role(UnitRole.CONTROL_GROUP_ONE):
+        if marine_squad := self.mediator.get_units_from_role(role=UnitRole.CONTROL_GROUP_ONE):
             squad_pos = marine_squad.center
             enemies = self.mediator.get_units_in_range(
                 [squad_pos], 10, UnitTreeQueryType.EnemyGround
