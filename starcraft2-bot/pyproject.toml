@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "starcraft2-bot"
+version = "0.1.0"
+description = "A StarCraft 2 bot using the Ares framework"
+authors = ["OpenHands <openhands@all-hands.dev>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+ares-sc2 = { path = "../ares-sc2", develop = true }
+sc2 = "^5.0.0"
+loguru = "^0.6.0"
+
+[tool.poetry.scripts]
+starcraft2-bot = "run:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

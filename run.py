@@ -18,7 +18,16 @@ sys.path.append("ares-sc2")
 import yaml
 
 from bot.main import MyBot
+
+# Import our StarCraft 2 bot
+import sys
+sys.path.append("starcraft2-bot")
+from bot.main import Starcraft2Bot
 from ladder import run_ladder_game
+
+# Add starcraft2-bot to path
+import sys
+sys.path.append("starcraft2-bot")
 
 plt = platform.system()
 # change if non default setup / linux
@@ -44,8 +53,8 @@ MY_BOT_RACE: str = "MyBotRace"
 
 
 def main():
-    bot_name: str = "MyBot"
-    race: Race = Race.Random
+    bot_name: str = "Starcraft2Bot"
+    race: Race = Race.Protoss
 
     __user_config_location__: str = path.abspath(".")
     user_config_path: str = path.join(__user_config_location__, CONFIG_FILE)
@@ -58,7 +67,7 @@ def main():
             if MY_BOT_RACE in config:
                 race = Race[config[MY_BOT_RACE].title()]
 
-    bot1 = Bot(race, MyBot(), bot_name)
+    bot1 = Bot(race, Starcraft2Bot(), bot_name)
 
     if "--LadderServer" in sys.argv:
         # Ladder game started by LadderManager

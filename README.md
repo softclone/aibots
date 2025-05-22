@@ -1,5 +1,6 @@
 **Useful Links**
 
+[StarCraft 2 Bot](starcraft2-bot/) - A StarCraft 2 bot using the Ares framework
 [ares-sc2 framework repo](https://github.com/AresSC2/ares-sc2)  
 [ares-sc2 documentation](https://aressc2.github.io/ares-sc2/index.html)
 
