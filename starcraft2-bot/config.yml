@@ -1,0 +1,6 @@
+# Bot configuration
+MyBotName: "Starcraft2Bot"
+MyBotRace: "Protoss"
+
+# Game settings
+game_step: 16
